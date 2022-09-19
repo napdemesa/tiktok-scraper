@@ -1074,7 +1074,7 @@ export class TikTokScraper extends EventEmitter {
         try {
             const response = await this.request<string>(options);
             const breakResponse = response
-                .split(/<script id="__NEXT_DATA__" type="application\/json" nonce="[\w-]+" crossorigin="anonymous">/)[1]
+                .split(`<script id="SIGI_STATE" type="application/json">`)[1]
                 .split(`</script>`)[0];
             if (breakResponse) {
                 const userMetadata: WebHtmlUserMetadata = JSON.parse(breakResponse);
@@ -1201,9 +1201,9 @@ export class TikTokScraper extends EventEmitter {
                 throw new Error(`Can't extract video meta data`);
             }
 
-            if (response.includes("__NEXT_DATA__")){
+            if (response.includes("SIGI_STATE")){
                 const rawVideoMetadata = response
-                    .split(/<script id="__NEXT_DATA__" type="application\/json" nonce="[\w-]+" crossorigin="anonymous">/)[1]
+                    .split(`<script id="SIGI_STATE" type="application/json">`)[1]
                     .split(`</script>`)[0];
 
                 const videoProps = JSON.parse(rawVideoMetadata);
